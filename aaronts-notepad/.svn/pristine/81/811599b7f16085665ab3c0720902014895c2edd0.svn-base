@@ -1,0 +1,57 @@
+/**
+ * Assignment 8
+ * Autumn 2013, TCSS 305B
+ */
+package eight.progpracticum;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.KeyStroke;
+
+/**
+ * The <code>HelpMenu</code> class builds the Help menu which is apart of the menubar
+ * of the Notepad.
+ * 
+ * @author Aaron Schraufnagel
+ * @version Nov. 24th, 2013
+ * @see java.awt.event.ActionEvent
+ * @see java.awt.event.ActionListener
+ * @see java.awt.event.KeyEvent
+ * @see javax.swing.JOptionPane
+ * @see javax.swing.KeyStroke
+ * 
+ * @cust.inv None
+ */
+@SuppressWarnings("serial")
+public class HelpMenu extends JMenu {
+    /**
+     * Represents the About menu item.
+     */
+    private JMenuItem myAboutMenuItem;
+    
+    /**
+     * Constructor for the HelpMenu that adds the Help menu to the menubar.
+     */
+    public HelpMenu() {
+        super("Help");
+        setMnemonic(KeyEvent.VK_H);
+        myAboutMenuItem = new JMenuItem("About");
+        
+        myAboutMenuItem.setAccelerator(KeyStroke.getKeyStroke("ctrl A"));
+        myAboutMenuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent anEvent) {
+                JOptionPane.showMessageDialog(null, "Created By: Aaron Schraufnagel"
+                        + "\nVersion 1.0", "About Aaron's Notepad",
+                        JOptionPane.INFORMATION_MESSAGE);
+            }            
+        });
+        
+        add(myAboutMenuItem);
+    }
+}

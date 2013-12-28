@@ -1,0 +1,7 @@
+package eight.progpracticum;
+
+import javax.swing.JPanel;
+
+public class FontDialog extends JPanel {
+
+}

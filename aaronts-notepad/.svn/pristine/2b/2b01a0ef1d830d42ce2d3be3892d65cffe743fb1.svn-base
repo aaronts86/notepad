@@ -1,0 +1,21 @@
+package eight.progpracticum;
+
+import javax.swing.JMenuBar;
+
+public class MenuBar extends JMenuBar {
+    private FileMenu myFileMenu;
+    private FormatMenu myFormatMenu;
+    private HelpMenu myHelpMenu;
+    
+    public MenuBar(TextEditor anEditor) {
+        super();
+        
+        myFileMenu = new FileMenu(anEditor);
+        myFormatMenu = new FormatMenu(anEditor);
+        myHelpMenu = new HelpMenu();
+        
+        add(myFileMenu);
+        add(myFormatMenu);
+        add(myHelpMenu);
+    }
+}

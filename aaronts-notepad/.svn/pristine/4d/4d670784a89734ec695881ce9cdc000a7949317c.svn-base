@@ -1,0 +1,31 @@
+package eight.progpracticum;
+
+import java.awt.BorderLayout;
+import java.awt.Toolkit;
+
+import javax.swing.JFrame;
+import javax.swing.JTextArea;
+
+public class NotepadFrame extends JFrame {
+    
+    private final MenuBar myMenuBar;
+    private final TextEditor myEditor;
+    private final JTextArea myTextArea;
+    
+    public NotepadFrame() {
+        super("Aaron's Notepad");      
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setVisible(true);
+        setIconImage(Toolkit.getDefaultToolkit().getImage("blue-ball.gif"));
+        
+        myTextArea = new JTextArea();
+        myEditor = new TextEditor(myTextArea);
+        add(myEditor, BorderLayout.CENTER);
+        
+        myMenuBar = new MenuBar(myEditor);
+        setJMenuBar(myMenuBar);
+        
+        pack();
+        setLocationRelativeTo(null);
+    }
+}

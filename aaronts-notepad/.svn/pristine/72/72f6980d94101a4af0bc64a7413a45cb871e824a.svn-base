@@ -1,0 +1,32 @@
+package eight.progpracticum;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.KeyStroke;
+
+public class HelpMenu extends JMenu {
+    private JMenuItem myAboutMenuItem;
+    
+    public HelpMenu() {
+        super("Help");
+        setMnemonic(KeyEvent.VK_H);
+        myAboutMenuItem = new JMenuItem("About");
+        
+        myAboutMenuItem.setAccelerator(KeyStroke.getKeyStroke("ctrl A"));
+        myAboutMenuItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent anEvent) {
+                JOptionPane.showMessageDialog(null, "Created By: Aaron Schraufnagel"
+                        + "\nVersion 1.0", "About Aaron's Notepad",
+                        JOptionPane.INFORMATION_MESSAGE);
+            }            
+        });
+        
+        add(myAboutMenuItem);
+    }
+}

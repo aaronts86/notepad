@@ -1,0 +1,86 @@
+package eight.progpracticum;
+
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+
+public class TextEditor extends JScrollPane {
+    private JTextArea myTextArea;
+    private FileWriter myFileWriter;
+    private BufferedWriter myWriter;
+    private FileReader myFileReader;
+    private BufferedReader myReader;
+    
+    /**
+     * Final variable the holds the default toolkit value.
+     */
+    private final Toolkit KIT = Toolkit.getDefaultToolkit();
+    /**
+     * Final variable that holds the screen size.
+     */
+    private final Dimension SCREEN_SIZE = KIT.getScreenSize();
+    /**
+     * Final variable that holds the screen width.
+     */
+    private final int SCREEN_WIDTH = (int) Math.round(SCREEN_SIZE.width * 0.85);
+    
+    /**
+     * Final variable that holds the screen height.
+     */
+    private final int SCREEN_HEIGHT = (int) Math.round(SCREEN_SIZE.height * 0.85);    
+    /**
+     * Final variable that holds the size of the screen.
+     */
+    private final Dimension DEFAULT_SIZE = new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT);
+    
+    public TextEditor(JTextArea aTextArea) {
+        super(aTextArea);
+        myTextArea = aTextArea;
+        setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        setPreferredSize(DEFAULT_SIZE);
+    }
+    
+    public void saveTextFile(String aPath, String aType) {
+        try {
+            String file = aPath + "." + aType;
+            myFileWriter = new FileWriter(new File(file));
+            myWriter = new BufferedWriter(myFileWriter);
+            myTextArea.write(myWriter);
+            myWriter.close();
+        }
+        catch (IOException anException) {
+            System.out.println("Unable to write to file");
+        }
+    }
+    
+    public void openTextFile(File aFile) {
+        try {
+            myFileReader = new FileReader(aFile);
+            BufferedReader myReader = new BufferedReader(myFileReader);
+                myTextArea.read(myReader, null);
+            myReader.close();
+        } catch (FileNotFoundException anException) {
+            System.out.println("Unable to open file");
+        } catch (IOException anException) {
+            System.out.println("Unable to read contents of file");
+        }
+    }
+    
+    public void addWordWrap() {
+        myTextArea.setLineWrap(true);
+    }
+    
+    public void removeWordWrap() {
+        myTextArea.setLineWrap(false);
+    }
+}

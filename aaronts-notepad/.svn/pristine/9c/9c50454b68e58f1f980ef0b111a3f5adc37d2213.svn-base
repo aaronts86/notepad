@@ -1,0 +1,107 @@
+package eight.progpracticum;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.io.File;
+
+import javax.swing.JFileChooser;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import javax.swing.KeyStroke;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
+public class FileMenu extends JMenu {
+    private JMenuItem myNewMenuItem;
+    private JMenuItem myOpenMenuItem;
+    private JMenuItem mySaveMenuItem;
+    private JMenuItem myPrintMenuItem;
+    private JMenuItem myExitMenuItem;
+    
+    private TextEditor myEditor;
+    private FileAction myFileAction;
+    private JFileChooser myFileChooser;
+    
+    public FileMenu(TextEditor anEditor) {
+        super("File");
+        setMnemonic(KeyEvent.VK_F);
+        
+        myEditor = anEditor;
+        
+        myNewMenuItem = new JMenuItem("New");
+        myOpenMenuItem = new JMenuItem("Open");
+        mySaveMenuItem = new JMenuItem("Save");
+        myPrintMenuItem = new JMenuItem("Print");
+        myExitMenuItem = new JMenuItem("Exit");
+        
+        myFileAction = new FileAction();
+        
+        myNewMenuItem.setAccelerator(KeyStroke.getKeyStroke("ctrl N"));
+        
+        myOpenMenuItem.setAccelerator(KeyStroke.getKeyStroke("ctrl O"));
+        myOpenMenuItem.addActionListener(myFileAction);
+        
+        mySaveMenuItem.setAccelerator(KeyStroke.getKeyStroke("ctrl S"));
+        mySaveMenuItem.addActionListener(myFileAction);
+        
+        myPrintMenuItem.setAccelerator(KeyStroke.getKeyStroke("ctrl P"));
+        
+        myExitMenuItem.setAccelerator(KeyStroke.getKeyStroke("ctrl X"));
+        myExitMenuItem.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent anEvent) {
+                System.exit(0);
+            }
+        });
+        
+        add(myNewMenuItem);
+        add(myOpenMenuItem);
+        add(mySaveMenuItem);
+        add(myPrintMenuItem);
+        addSeparator();
+        add(myExitMenuItem);
+    }
+    
+    public class FileAction implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent anEvent) {
+            if (myFileChooser == null) {
+                myFileChooser = new JFileChooser();
+            }
+            
+            Object source = anEvent.getSource();
+            
+            myFileChooser.resetChoosableFileFilters();
+            
+            int select = -1;
+            
+            if (source == mySaveMenuItem) {
+                myFileChooser.setFileFilter(new FileNameExtensionFilter
+                                           ("TXT format (*.txt)", "txt"));
+                myFileChooser.setFileFilter(new FileNameExtensionFilter
+                                           ("RTF format (*.rtf)", "rtf"));
+                select = myFileChooser.showSaveDialog(null);
+            } else if (source == myOpenMenuItem) {
+                myFileChooser.setFileFilter(new FileNameExtensionFilter
+                                           ("Text Files", "txt"));
+                select = myFileChooser.showOpenDialog(null);
+            }
+            
+            File result;
+            
+            if (select == JFileChooser.APPROVE_OPTION) {
+                result = myFileChooser.getSelectedFile();
+                if (result == null) {
+                    return;
+                }
+                if (source == mySaveMenuItem) {
+                    String extension = myFileChooser.getFileFilter().getDescription().substring(0, 3);
+                    myEditor.saveTextFile(result.getPath(), extension);
+                } else if (source == myOpenMenuItem) {
+                    myEditor.openTextFile(result);
+                }
+            }
+        }
+    }
+}

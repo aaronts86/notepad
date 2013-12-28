@@ -1,0 +1,33 @@
+package eight.progpracticum;
+
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+
+/**
+ * JTextComponent is an extension of JTextArea
+ * set title of frame to name of file
+ * Menu: File > New, Open(use JTextcomponent read method), 
+ Save(Use JTextcomponent write method, only use "Text files" .txt and .rtf), 
+ Print(Use JTextcomponent print method), Seperator, Exit all with mnemonic (ctrl x)
+ * Format > Word Wrap(JTextarea has wordwrap method), 
+ Font >Submenu: Type(InputDialogBox, use array jcombobox that grabs all font types from cpu, 
+ find method online, arial by default), Style, Size(Joptionpane boxes for each type) can change everything
+ * Can put JSpinner in joptionpane for size
+ * Use JOptionPane's throughout to confirm options(New, Exit, etc)
+ * Harder option is to make custom dialog box( joptionpane) by extending JPanel for font instead of submenu
+ * Can use adapter or listener for actions(Exit can be inner class or any other actions that are few lines of code)
+ * Leave font for last step
+ * Ask user to save if they exit
+ * Don't use static finals
+ */
+public class NotepadMain {
+    public static void main(String[] args){
+        EventQueue.invokeLater(new Runnable()
+            {
+                public void run() {
+                    final JFrame frame = new NotepadFrame();
+                }
+        });
+    }
+}

@@ -1,0 +1,60 @@
+/**
+ * Assignment 8
+ * Autumn 2013, TCSS 305B
+ */
+package eight.progpracticum;
+
+import java.awt.BorderLayout;
+import java.awt.Toolkit;
+
+import javax.swing.JFrame;
+import javax.swing.JTextArea;
+
+/**
+ * The <code>NotepadFrame</code> class builds the frame for the Notepad.
+ * 
+ * @author Aaron Schraufnagel
+ * @version Nov. 24th, 2013
+ * @see java.awt.BorderLayout
+ * @see java.awt.Toolkit
+ * @see javax.swing.JFrame
+ * @see javax.swing.JTextArea
+ * 
+ * @cust.inv None
+ */
+@SuppressWarnings("serial")
+public class NotepadFrame extends JFrame {
+    /**
+     * Represents the menubar for the Notepad.
+     */
+    private final MenuBar myMenuBar;
+    /**
+     * Represents the JScrollPane containing the textarea for the Notepad.
+     */
+    private final TextEditor myEditor;
+    /**
+     * Represents the textarea of the Notepad.
+     */
+    private final JTextArea myTextArea;
+    
+    /**
+     * Constructor the NotepadFrame that adds the components to the frame.
+     * 
+     * @custom.post the frame is filled with the components for the Notepad
+     */
+    public NotepadFrame() {
+        super("Aaron's Notepad");      
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setIconImage(Toolkit.getDefaultToolkit().getImage("notepad.jpg"));
+        
+        myTextArea = new JTextArea();
+        myEditor = new TextEditor(myTextArea);
+        add(myEditor, BorderLayout.CENTER);
+        
+        myMenuBar = new MenuBar(this, myTextArea);
+        setJMenuBar(myMenuBar);
+        
+        pack();
+        setLocationRelativeTo(null);
+    }
+}
